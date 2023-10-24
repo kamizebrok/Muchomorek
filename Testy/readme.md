@@ -1,11 +1,11 @@
 
-<p align="center">
+<p align="">
   Udane zaimportowane mapy OpenStreetMap przy użyciu biblioteki leaflet.
   <img src="https://github.com/kamizebrok/Muchomorek/blob/main/Testy/screeny/Mapka_1.png" {width=700px height=550px} />
   <br />
 </p>
 
-<p align="center">
+<p align="">
   Naniesienie danych wraz z znacznikami na poszczególne miejsca na mapie wraz z rozpoznaniem województw.
   <img src="https://github.com/kamizebrok/Muchomorek/blob/main/Testy/screeny/Mapka_2.png" {width=700px height=550px} alt="Image Description"/>
   <br />
