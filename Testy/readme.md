@@ -12,7 +12,7 @@
 </p>
 <p align="center">
   Problemy z połączeniem WeatherStack API z naszym programem
-  <img src="https://github.com/kamizebrok/Muchomorek/assets/64143856/86fa4fce-e43f-4a44-a53c-d896bc0d9b72" />
+  <img src="https://github.com/kamizebrok/Muchomorek/assets/64143856/86fa4fce-e43f-4a44-a53c-d896bc0d9b72" {width=300px height=200px}/>
   <br />
 </p>
 
