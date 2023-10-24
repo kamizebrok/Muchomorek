@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map user Location</title>
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js">
+	
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/></script>
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
+
+    <style>
+		#board{
+			width: 100%;
+			display: flex;
+			justify-content: flex-end;
+			
+		}
+		
+        #map { 
+		
+		float: right;
+		height: 800px;
+		width: 1000px; 
+		
+	}
+    </style>
+	
+</head>
+
+
+
+
+
+
+<body>
+	<div id="board">     
+		<div id="map"></div>
+	</div>
+</body>
+
+
+
+
+
+<script> // Dane losowych punktów (nie otwierać)
+	var Points = [
+	[53.0704, 14.9447, 47, 'Prawdziwek', 'zachodniopomorskie'],
+[52.7099, 22.3842, 141, 'Borowik', 'mazowieckie'],
+[51.7858, 18.1715, 100, 'Borowik', 'wielkopolskie'],
+[50.9658, 22.2728, 75, 'Prawdziwek', 'lubelskie'],
+[53.1377, 22.6267, 73, 'Prawdziwek', 'podlaskie'],
+[53.4473, 22.6788, 132, 'Kurka', 'podlaskie'],
+[53.0417, 18.3928, 69, 'Prawdziwek', 'kujawsko-pomorskie'],
+[51.243, 15.7708, 124, 'Borowik', 'dolnośląskie'],
+[51.3707, 22.7144, 60, 'Prawdziwek', 'lubelskie'],
+[51.6075, 18.7796, 100, 'Kurka', 'łódzkie'],
+[51.0123, 23.8871, 52, 'Prawdziwek', 'lubelskie'],
+[53.3107, 21.6353, 133, 'Prawdziwek', 'mazowieckie'],
+[52.2843, 19.5283, 104, 'Prawdziwek', 'łódzkie'],
+[50.2947, 23.1083, 111, 'Borowik', 'podkarpackie'],
+[53.8918, 18.4255, 97, 'Borowik', 'pomorskie'],
+[50.0086, 20.7053, 107, 'Borowik', 'małopolskie'],
+[52.2953, 17.1073, 153, 'Borowik', 'wielkopolskie'],
+[49.8571, 21.8209, 144, 'Prawdziwek', 'podkarpackie'],
+[53.0721, 17.8245, 152, 'Prawdziwek', 'kujawsko-pomorskie'],
+[52.0395, 18.1196, 152, 'Kurka', 'wielkopolskie'],
+[49.7997, 21.4561, 146, 'Kurka', 'podkarpackie'],
+[52.9071, 17.1408, 103, 'Borowik', 'wielkopolskie'],
+[52.3023, 19.7948, 98, 'Prawdziwek', 'mazowieckie'],
+[50.8061, 21.5509, 71, 'Prawdziwek', 'świętokrzyskie'],
+[51.3141, 19.3571, 82, 'Borowik', 'łódzkie'],
+[52.5606, 21.6795, 126, 'Kurka', 'mazowieckie'],
+[51.2283, 18.6978, 122, 'Borowik', 'łódzkie'],
+[50.6493, 23.3692, 141, 'Kurka', 'lubelskie'],
+[52.7401, 19.8792, 115, 'Borowik', 'mazowieckie'],
+[53.1863, 23.5986, 135, 'Kurka', 'podlaskie'],
+[50.3182, 21.1331, 120, 'Borowik', 'małopolskie'],
+[52.0583, 14.9463, 89, 'Prawdziwek', 'lubuskie'],
+[51.283, 19.9076, 130, 'Prawdziwek', 'łódzkie'],
+[52.7281, 16.973, 123, 'Prawdziwek', 'wielkopolskie'],
+[52.7138, 17.686, 64, 'Borowik', 'kujawsko-pomorskie'],
+[49.7986, 19.8921, 99, 'Borowik', 'małopolskie'],
+[53.0323, 20.8505, 135, 'Borowik', 'mazowieckie'],
+[53.58, 16.36, 50, 'Prawdziwek', 'zachodniopomorskie'],
+[51.0597, 23.2694, 45, 'Prawdziwek', 'lubelskie'],
+[50.0791, 20.6669, 124, 'Borowik', 'małopolskie'],
+[52.9495, 18.8192, 153, 'Prawdziwek', 'kujawsko-pomorskie'],
+[53.2947, 22.8918, 103, 'Kurka', 'podlaskie'],
+[52.9281, 17.9847, 54, 'Kurka', 'kujawsko-pomorskie'],
+[51.2595, 17.589, 112, 'Prawdziwek', 'dolnośląskie'],
+[51.08, 15.6253, 115, 'Kurka', 'dolnośląskie'],
+[51.449, 22.7804, 129, 'Kurka', 'lubelskie'],
+[52.8459, 16.5792, 138, 'Borowik', 'wielkopolskie'],
+[53.1278, 17.4638, 71, 'Prawdziwek', 'kujawsko-pomorskie'],
+[52.5707, 18.4699, 133, 'Borowik', 'kujawsko-pomorskie'],
+[51.9322, 23.3171, 57, 'Prawdziwek', 'lubelskie'],
+[53.8284, 16.6507, 44, 'Borowik', 'zachodniopomorskie'],
+[53.6048, 20.5814, 101, 'Prawdziwek', 'warmińsko-mazurskie'],
+[50.2607, 17.4339, 98, 'Prawdziwek', 'opolskie'],
+[53.5647, 20.9162, 104, 'Borowik', 'warmińsko-mazurskie'],
+[51.5408, 15.8457, 99, 'Kurka', 'dolnośląskie'],
+[51.1635, 20.3433, 123, 'Borowik', 'świętokrzyskie'],
+[52.0478, 15.4497, 131, 'Borowik', 'lubuskie'],
+[50.5847, 16.8722, 71, 'Prawdziwek', 'dolnośląskie'],
+[53.2725, 18.4247, 155, 'Borowik', 'kujawsko-pomorskie'],
+[53.2158, 22.3088, 167, 'Borowik', 'podlaskie'],
+[50.8271, 21.8224, 107, 'Prawdziwek', 'świętokrzyskie'],
+[50.6322, 23.5807, 61, 'Borowik', 'lubelskie'],
+[49.8276, 19.18, 85, 'Prawdziwek', 'śląskie'],
+[51.4947, 17.3448, 107, 'Prawdziwek', 'dolnośląskie'],
+[51.5367, 23.3472, 158, 'Borowik', 'lubelskie'],
+[51.3882, 19.0497, 73, 'Prawdziwek', 'łódzkie'],
+[53.5102, 16.9142, 109, 'Prawdziwek', 'wielkopolskie'],
+[50.8384, 18.6792, 107, 'Kurka', 'śląskie'],
+[49.6421, 20.0687, 58, 'Kurka', 'małopolskie'],
+[51.5839, 20.5014, 89, 'Borowik', 'mazowieckie'],
+[51.6228, 20.7276, 118, 'Kurka', 'mazowieckie'],
+[52.4799, 19.8101, 50, 'Borowik', 'mazowieckie'],
+[50.0355, 19.942, 47, 'Prawdziwek', 'małopolskie'],
+[50.9165, 22.8706, 141, 'Borowik', 'lubelskie'],
+[49.5877, 21.3268, 116, 'Kurka', 'małopolskie'],
+[52.5069, 17.2267, 62, 'Borowik', 'wielkopolskie'],
+[53.2102, 20.5039, 122, 'Borowik', 'mazowieckie'],
+[53.0038, 21.8897, 130, 'Kurka', 'podlaskie'],
+[50.828, 21.3592, 97, 'Borowik', 'świętokrzyskie'],
+[50.4259, 23.2616, 110, 'Prawdziwek', 'lubelskie'],
+[52.8628, 19.225, 166, 'Prawdziwek', 'kujawsko-pomorskie'],
+[51.9699, 17.2499, 152, 'Kurka', 'wielkopolskie'],
+[53.9789, 22.424, 121, 'Kurka', 'warmińsko-mazurskie'],
+[53.5115, 21.5897, 59, 'Kurka', 'warmińsko-mazurskie'],
+[50.6501, 20.1924, 83, 'Kurka', 'świętokrzyskie'],
+[53.8598, 20.9104, 118, 'Kurka', 'warmińsko-mazurskie'],
+[51.081, 19.0385, 67, 'Borowik', 'łódzkie'],
+[51.7262, 21.6479, 71, 'Borowik', 'mazowieckie'],
+[52.4101, 21.2089, 117, 'Borowik', 'mazowieckie'],
+[51.2482, 21.2499, 123, 'Kurka', 'mazowieckie'],
+[51.4226, 17.2478, 63, 'Borowik', 'dolnośląskie'],
+[50.307, 20.1329, 56, 'Kurka', 'małopolskie'],
+[53.0535, 19.1794, 81, 'Prawdziwek', 'kujawsko-pomorskie'],
+[50.5571, 20.207, 69, 'Kurka', 'świętokrzyskie'],
+[49.5553, 19.2608, 152, 'Prawdziwek', 'śląskie'],
+[51.2858, 23.4302, 55, 'Prawdziwek', 'lubelskie'],
+[53.8831, 22.177, 89, 'Prawdziwek', 'warmińsko-mazurskie'],
+[50.079, 22.4502, 39, 'Prawdziwek', 'podkarpackie'],
+[49.5184, 21.5169, 70, 'Borowik', 'podkarpackie'],
+[52.7938, 20.9799, 120, 'Kurka', 'mazowieckie'],
+[52.5802, 21.943, 59, 'Borowik', 'mazowieckie'],
+[51.1513, 15.0125, 99, 'Borowik', 'dolnośląskie'],
+[52.9367, 15.8878, 109, 'Prawdziwek', 'lubuskie'],
+[50.0375, 19.8783, 77, 'Borowik', 'małopolskie'],
+[53.0909, 19.139, 69, 'Borowik', 'kujawsko-pomorskie'],
+[49.9985, 22.6697, 82, 'Borowik', 'podkarpackie'],
+[52.2151, 16.3871, 117, 'Borowik', 'wielkopolskie'],
+[50.6636, 17.1826, 122, 'Kurka', 'dolnośląskie'],
+[53.236, 14.806, 119, 'Prawdziwek', 'zachodniopomorskie'],
+[49.803, 19.9428, 74, 'Borowik', 'małopolskie'],
+[50.5028, 20.6776, 122, 'Kurka', 'świętokrzyskie'],
+[51.7153, 20.0886, 107, 'Prawdziwek', 'łódzkie'],
+[53.3118, 15.9799, 39, 'Borowik', 'zachodniopomorskie'],
+[52.2519, 23.0726, 83, 'Kurka', 'mazowieckie'],
+[52.2444, 22.0066, 79, 'Kurka', 'mazowieckie'],
+[52.2593, 15.5169, 86, 'Kurka', 'lubuskie'],
+[50.7814, 23.5801, 81, 'Kurka', 'lubelskie'],
+[51.2856, 15.8373, 104, 'Borowik', 'dolnośląskie'],
+[53.3831, 19.502, 72, 'Borowik', 'warmińsko-mazurskie'],
+[53.3443, 22.2569, 127, 'Borowik', 'podlaskie'],
+[52.9151, 21.9899, 90, 'Prawdziwek', 'mazowieckie'],
+[52.2939, 15.6335, 109, 'Kurka', 'lubuskie'],
+[49.7525, 22.4419, 42, 'Kurka', 'podkarpackie'],
+[51.5818, 15.8617, 63, 'Kurka', 'dolnośląskie'],
+[49.7933, 19.4992, 68, 'Borowik', 'małopolskie'],
+[52.3363, 16.0619, 80, 'Borowik', 'wielkopolskie'],
+[53.0956, 17.393, 97, 'Borowik', 'kujawsko-pomorskie'],
+[52.3394, 23.0967, 103, 'Prawdziwek', 'podlaskie'],
+[49.6594, 22.7537, 131, 'Kurka', 'podkarpackie'],
+[52.4234, 17.4196, 69, 'Borowik', 'wielkopolskie'],
+[52.4964, 18.9046, 44, 'Prawdziwek', 'kujawsko-pomorskie'],
+[51.1873, 16.1816, 90, 'Borowik', 'dolnośląskie'],
+[53.3273, 18.9576, 99, 'Kurka', 'kujawsko-pomorskie'],
+[49.4252, 20.7343, 103, 'Borowik', 'małopolskie'],
+[50.4607, 16.9572, 63, 'Prawdziwek', 'opolskie'],
+[53.6274, 18.9062, 138, 'Borowik', 'pomorskie'],
+[52.6154, 20.9966, 92, 'Prawdziwek', 'mazowieckie'],
+[53.2837, 22.7519, 49, 'Borowik', 'podlaskie'],
+[50.357, 20.0074, 68, 'Borowik', 'małopolskie'],
+[52.2123, 16.7945, 43, 'Borowik', 'wielkopolskie'],
+[52.0291, 19.7215, 52, 'Borowik', 'łódzkie'],
+[50.4814, 20.7547, 114, 'Borowik', 'świętokrzyskie'],
+[51.9461, 20.2693, 39, 'Borowik', 'mazowieckie'],
+[51.9149, 18.1348, 131, 'Prawdziwek', 'wielkopolskie'],
+[51.3939, 18.6648, 83, 'Kurka', 'łódzkie'],
+[50.2938, 19.3608, 85, 'Borowik', 'śląskie'],
+[50.8196, 18.3919, 94, 'Kurka', 'opolskie'],
+[53.6314, 22.7938, 138, 'Prawdziwek', 'podlaskie'],
+[50.6567, 23.9366, 58, 'Borowik', 'lubelskie'],
+[51.202, 18.0379, 155, 'Prawdziwek', 'wielkopolskie'],
+[52.7268, 17.9256, 39, 'Borowik', 'kujawsko-pomorskie'],
+[53.9144, 19.3843, 130, 'Borowik', 'pomorskie'],
+[49.5376, 22.4592, 64, 'Prawdziwek', 'podkarpackie'],
+[50.0401, 18.8092, 109, 'Borowik', 'śląskie'],
+[50.7679, 23.9785, 123, 'Kurka', 'lubelskie'],
+[53.305, 18.2247, 44, 'Prawdziwek', 'kujawsko-pomorskie'],
+[53.7762, 19.1481, 154, 'Prawdziwek', 'pomorskie'],
+[49.8428, 21.2025, 76, 'Kurka', 'małopolskie'],
+[52.52, 17.2015, 69, 'Kurka', 'wielkopolskie'],
+[51.5634, 20.1156, 141, 'Kurka', 'łódzkie'],
+[53.1997, 20.7264, 128, 'Borowik', 'mazowieckie'],
+[52.9477, 16.8197, 156, 'Kurka', 'wielkopolskie'],
+[52.9784, 15.7084, 139, 'Prawdziwek', 'lubuskie'],
+[52.0701, 17.2502, 77, 'Prawdziwek', 'wielkopolskie'],
+[52.7578, 23.6589, 148, 'Prawdziwek', 'podlaskie'],
+[53.1341, 18.9363, 122, 'Kurka', 'kujawsko-pomorskie'],
+[53.384, 14.4072, 133, 'Prawdziwek', 'zachodniopomorskie'],
+[53.7804, 18.2936, 67, 'Prawdziwek', 'pomorskie'],
+[51.6136, 18.2364, 52, 'Borowik', 'wielkopolskie'],
+[52.7894, 18.7144, 137, 'Borowik', 'kujawsko-pomorskie'],
+[52.6002, 14.8414, 48, 'Prawdziwek', 'lubuskie'],
+[50.7847, 17.2753, 139, 'Borowik', 'opolskie'],
+[52.169, 21.1734, 69, 'Kurka', 'mazowieckie'],
+[50.8737, 22.6174, 141, 'Prawdziwek', 'lubelskie']
+	];
+</script>
+
+<script>
+    var map = L.map('map'); 
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 15,
+        minZoom: 7,
+        attribution: '© OpenStreetMap'
+    }).addTo(map); 
+
+    var start = L.latLng(52.229676, 23.012229);
+    var end = L.latLng(52.406374, 16.925168);
+    var bounds = L.latLngBounds(start, end);
+    map.fitBounds(bounds);
+
+    Points.forEach(function (point) {
+        var marker = L.marker([point[0], point[1]]).addTo(map);
+        marker.bindTooltip(`Latitude: ${point[0]}, Longitude: ${point[1]}, Mushrooms/hour: ${point[2]}, Type: ${point[3]}, Region: ${point[4]}`).openTooltip();
+    });
+
+    var heatLayer = L.heatLayer(warsawPoints, { radius: 20 }).addTo(map);
+	
+
+</script>
+</html>
