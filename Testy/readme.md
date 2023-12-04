@@ -24,8 +24,8 @@
 </p>
 
 <p align="">
-  <p> Problemy z połączeniem WeatherStack API z naszym programem </p>
-  <img src="https://github.com/kamizebrok/Muchomorek/assets/64143856/141ff53e-dfab-4053-abed-cd15869c2498" {width=250px height=100px}/>
+  <p> Udany import bazy danych do skryptu JS oraz przesyłanie koordynatów poprzez kliknięcie na mapę</p>
+  <img src="https://github.com/kamizebrok/Muchomorek/assets/64143856/141ff53e-dfab-4053-abed-cd15869c2498" {width=700px height=550px}/>
   <br />
 </p>
 
