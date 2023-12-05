@@ -1,0 +1,119 @@
+/* Stylizacja podstawowa */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Minimalna wysokość ekranu - aby stopka była na dole */
+  
+  background-image: url('back.jpeg'); /* Twoja stockowa grafika */
+  background-size: cover;
+  background-position: center;
+  padding: 30px;
+  position: relative;
+}
+
+header, footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 25px;
+  opacity: 0.8; /* Przezroczystość */
+}
+
+.logo {
+  position: absolute;
+  top: 42px;
+  left: 45px;
+  
+}
+
+.logo img {
+  width: 130px; /* Możesz dostosować szerokość logo */
+  border-radius: 25px;
+}
+
+
+main {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+  flex-grow: 1;
+}
+
+section {
+  background-color: white;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  flex-shrink: 0; /* Zapobiega zbyt dużemu skurczaniu stopki */
+}
+
+.container {
+  display: flex;
+  height: 95vh;
+}
+
+.formularz {
+  width: 25%;
+  height: 35%;
+  padding: 30px;
+  background-color: #f2f2f2;
+  opacity: 0.85;
+  border-radius: 25px;
+}
+
+.grafika {
+  flex: 1; /* Reszta dostępnego miejsca */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grafika img {
+  opacity: 0.7;
+  border-radius: 25px;
+}
+
+#map{
+	float: right;
+	max-width: 95%;
+	max-height: 95%;
+	opacity:0.9;
+	border-radius: 15px;
+}
+
+@media screen and (max-width: 768px) {
+  /* Mniejsze ekrany */
+  header {
+    font-size: 18px; /* dostosowanie rozmiaru nagłówka */
+  }
+}
