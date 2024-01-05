@@ -59,11 +59,21 @@ circle.bindTooltip(`Latitude: ${point.latitude}, Longitude: ${point.longitude}, 
 });
 
 
+// FUNKCJA POGODOWA
+const apiKey = "39c43c6a1704445300c2c716f37cb354";
+function getWeatherData(lat, lon, apiKey) {
+	const baseUrl = `http://api.openweathermap.org/data/2.5/weather?`;
+	let params = `lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+ 
+	fetch(baseUrl + params)
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.catch(error => console.error('Error:', error));
+ }
 
 
 
 //Klikanie na mapie
-
 var popup = L.popup();
 var activeMarker = null;
 function onMapClick(e) {
@@ -75,30 +85,14 @@ function onMapClick(e) {
     let marker = L.marker(e.latlng).addTo(map); 
 	activeMarker = marker;
 
+	
 	//e.latlng to kordy klikającego na mapie ( widać w konsoli )
 	console.log(e.latlng)
+	//Funkcja pogodowa wywołanie od punktu, wszystko w konsoli
+	console.log(getWeatherData(e.latlng.lat, e.latlng.lng, apiKey));
 }
 map.on('click', onMapClick);
 
 
-//Openweathermap ( nie robić tego tak, tylko przez api)
-// var Weather = [];
-// fetch('./pogoda.json')
-//     .then(results => results.json())
-//     .then(data =>{
-//         Weather = data;
-// 		processPoints(Weather);	
-//     });
-
-
-// import "./App.css";
-// import { useState } from "react";
-
-
-// const api = {
-// 	key: "39c43c6a1704445300c2c716f37cb354"
-// 	base: "https://api.openweathermap.org/data/2.5/"
-// };
-
-// https://api.openweathermap.org/data/1.5/weather?lat={52.649729197309426}&lon={19.368896484375004}&appid={39c43c6a1704445300c2c716f37cb354}
-// https://pro.openweathermap.org/data/2.5/forecast/climate?lat={52.649729197309426}&lon={19.368896484375004}&appid={39c43c6a1704445300c2c716f37cb354}
+ 
+ 
