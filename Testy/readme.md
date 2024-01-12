@@ -29,3 +29,10 @@
   <br />
 </p>
 
+
+<p align="">
+  <p> Udany import bazy danych do skryptu JS oraz przesyłanie koordynatów poprzez kliknięcie na mapę</p>
+  <img src="https://github.com/kamizebrok/Muchomorek/assets/64143856/3c129187-5c14-4dfd-b50f-bd31b8ec4a6f" {width=700px height=550px}/>
+  <br />
+</p>
+
