@@ -7,55 +7,62 @@
   <title>Formularz zbierania grzybów</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <div class="container">
-    <form class="formularz">
-      <h2>Formularz zbierania grzybów</h2>
-	  
-	  <label for="nick">Twoje imię/pseudonim: </label>
-      <input type="text" id="nick" name="nick" required><br><br>
 
-      <label for="jakie">Jakie grzyby zbierałeś: </label>
-      <input type="text" id="jakie" name="jakie" required><br><br>
+      <form class="formularz">
+        <h2>Formularz zbierania grzybów</h2>
+      
+        <label for="nick">Twoje imię/pseudonim: </label>
+          <input type="text" id="nick" name="nick" required><br><br>
 
-	  <label for="ile">Ilość zebranych grzybów: </label>
-      <input type="number" value="5" id="ile" name="ile" required><br><br>
-	  
-	  <label for="data">Kiedy zbierałeś grzyby?</label>
-      <input type="date" id="" name="data" required><br><br>
-		
-	  <input type="submit" value="Zapisz informacje">
+          <label for="jakie">Jakie grzyby zbierałeś: </label>
+          <input type="text" id="jakie" name="jakie" required><br><br>
 
-    </form>
+        <label for="ile">Ilość zebranych grzybów: </label>
+          <input type="number" value="5" id="ile" name="ile" required><br><br>
+        
+        <label for="data">Kiedy zbierałeś grzyby?</label>
+          <input type="date" id="" name="data" required><br><br>
+        
+        <label for="data">Gdzie </label>
+          <input type="number" id="" name="data" required><br><br>
 
-	
-	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <input type="submit" value="Zapisz informacje">
 
-	<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js">
-    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-    crossorigin=""
-  </script>
+      </form>
 
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-    crossorigin="">
-  </script>
 
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-	
-  <div id="board">     
-		<div class="grafika img" id="map">
-		  <img src="jpgs/mapa_lasow.png">
-		</div>
-  <script src="start.js"></script>
-	</div>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js">
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    </script>
+
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin="">
+    </script>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+
+    
+    <div id="board">     
+      <div class="grafika img" id="map">
+        <img src="jpgs/mapaxd.jpg">
+      </div>
+    <script src="start.js"></script>
+    </div>
+
   </div>
 
   <footer>
-    <p>Strona o grzybach &copy; 2023</p>
+    <p>Grzybiarze POLSL &copy; 2023</p>
   </footer>
 </body>
 
