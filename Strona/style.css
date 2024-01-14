@@ -8,7 +8,7 @@ body {
   flex-direction: column;
   min-height: 100vh; /* Minimalna wysokość ekranu - aby stopka była na dole */
   
-  background-image: url('back.jpeg'); /* Twoja stockowa grafika */
+  background-image: url('jpgs/back.jpeg'); /* Twoja stockowa grafika */
   background-size: cover;
   background-position: center;
   padding: 30px;
