@@ -103,13 +103,28 @@ footer {
   border-radius: 25px;
 }
 
-#map{
+
+#board {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#map {
+  float: right;
+  max-width: 95%;
+	max-height: 95%;
+  height: 800px;
+  width: 1200px;
+  opacity:0.95;
+}
+
+/* #map{
 	float: right;
 	max-width: 95%;
 	max-height: 95%;
 	opacity:0.9;
-	border-radius: 15px;
-}
+} */
 
 @media screen and (max-width: 768px) {
   /* Mniejsze ekrany */

@@ -20,7 +20,7 @@ fetch('./Coords.json')
 				fillOpacity: 0.8,
 				radius: radius
 			}).addTo(map);
-			circle.bindTooltip(`Latitude: ${point.latitude}, Longitude: ${point.longitude}, Intensity/hour: ${intensity.amount}, Type: ${point.type}, Region: ${point.voidvodeship}`).openTooltip();
+			circle.bindTooltip(`Longitude: ${point.longitude}, Latitude: ${point.latitude}, Intensity/hour: ${intensity.amount}, Type: ${point.type}, Region: ${point.voidvodeship}`).openTooltip();
 		});
 	}
 
@@ -69,9 +69,7 @@ function getWeatherData(lat, lon, apiKey) {
 		.then(response => response.json())
 		.then(data => console.log(data))
 		.catch(error => console.error('Error:', error));
- }
-
-
+}
 
 //Klikanie na mapie
 var popup = L.popup();
@@ -86,10 +84,27 @@ function onMapClick(e) {
 	activeMarker = marker;
 
 	
-	//e.latlng to kordy klikającego na mapie ( widać w konsoli )
-	console.log(e.latlng)
 	//Funkcja pogodowa wywołanie od punktu, wszystko w konsoli
-	console.log(getWeatherData(e.latlng.lat, e.latlng.lng, apiKey));
+
+	var weather_stats = getWeatherData(e.latlng.lat, e.latlng.lng, apiKey);
+
+	
+	//Wywala error, że undefined !!!!! 
+	console.log('Weather data:', (weather_stats));
+
+
+	if (weather_stats != undefined) {
+		var parsedStats = JSON.parse(weather_stats);
+		var temperature = parsedStats.temp;
+		var coords = parsedStats.coord;
+		var conditions = parsedStats.weather;
+		console.log(weather_stats);
+		document.getElementById("pogoda").innerHTML = `Temperature: ${temperature}, Coords: ${coords}, Weather: ${conditions}`;
+	
+	} else 
+	{
+		console.log('Weather data is undefined');
+	}
 }
 map.on('click', onMapClick);
 
