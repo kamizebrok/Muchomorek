@@ -1,30 +1,35 @@
 //Import z .json do var Points
 
 var Points = [];
+var Points2 = [];
 fetch('./Coords.json')
     .then(results => results.json())
     .then(data =>{
         Points = data;
-		processPoints(Points);	
+		processPoints(Points);			
     });
 
-	function processPoints(Points) {
-		console.log(Points);
-		Points.forEach(point => {
-			var intensity = point.amount;
-			var radius = 15 * intensity;
-			var color = 'red';
-			var circle = L.circle([point.latitude, point.longitude], {
-				color: color,
-				fillColor: color,
-				fillOpacity: 0.8,
-				radius: radius
-			}).addTo(map);
-			circle.bindTooltip(`Longitude: ${point.longitude}, Latitude: ${point.latitude}, Intensity/hour: ${intensity.amount}, Type: ${point.type}, Region: ${point.voidvodeship}`).openTooltip();
-		});
-	}
+function processPoints(Points) {
+	// console.log(Points);
+	
+	Points.forEach(point => {
+		//Dodawanie do Points2
+		Points2.push(point);
 
+		var intensity = point.amount;
+		var radius = 30 * intensity;
+		var color = 'red';
+		var circle = L.circle([point.latitude, point.longitude], {
+			color: color,
+			fillColor: color,
+			fillOpacity: 0.8,
+			radius: radius
+		}).addTo(map);
+		circle.bindTooltip(`Longitude: ${point.longitude}, Latitude: ${point.latitude}, Intensity/hour: ${intensity.amount}, Type: ${point.type}, Region: ${point.voidvodeship}`).openTooltip();
+	});
+}
 
+console.log(Points);
 
 //Tworzenie mapy
 var map = L.map('map');
@@ -108,6 +113,44 @@ function onMapClick(e) {
 }
 map.on('click', onMapClick);
 
+
+// FUZZY SETSY
+
+function process2Points(Points2, click_lat, click_lon) {
+	console.log(Array.isArray(Points2));
+	console.log(Points2.length);
+	Points2.forEach(point => {
+		
+		//Amount
+		var additional = 0;
+		var amount_of = point.amount;
+
+		if (amount_of >= 0 && amount_of <= 5) {
+			additional = 0.1;
+		} else if (amount_of > 5 && amount_of <= 20) {
+			additional = 0.2;
+		} else if (amount_of > 20 && amount_of <= 50) {
+			additional = 0.5;
+		} else if (amount_of > 50 && amount_of <= 100) {
+			additional = 0.7;
+		} else if (amount_of > 100) {
+			additional = 1.0;
+		}
+		//Distance
+		var latitu = point.latitude;
+		var longitu = point.longitude;
+
+		var c_lat = click_lat;
+		var c_lon = click_lon;
+		var distance = Math.sqrt(Math.pow(latitu - click_lat, 2) + Math.pow(longitu - click_lon, 2));
+		console.log(additional, distance, typeof(point.latitude), typeof(c_lat));
+
+		});
+}
+
+var click_lat = 49.8428;
+var click_lon = 16.8197;
+process2Points(Points2, click_lat, click_lon);
 
  
  
