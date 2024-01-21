@@ -1,6 +1,8 @@
 // Dane dotyczące popularnych gatunków grzybów
 const popularneGrzyby = ['Prawdziwek', 'Kania', 'Kurka'];
 
+const kordyGrzyby = ['123', '456', '678'];
+
 // Funkcja generująca listę popularnych grzybów
 function generujListeGrzybow() {
   const grzybyList = document.getElementById('grzybyList');
@@ -12,16 +14,29 @@ function generujListeGrzybow() {
   });
 }
 
+//Funkcja wyswietlajaca koordynaty w okolica.html
+function pobieszKoordy() {
+  const kordyList = document.getElementById('kordyList');
+
+  kordyGrzyby.forEach(kord => {
+    const listItem = document.createElement('li');
+    listItem.textContent = kord;
+    kordyList.appendChild(listItem);
+  });
+}
+
 // Obsługa przycisku "Znajdź grzyby"
 document.getElementById('znajdzGrzybyBtn').addEventListener('click', () => {
   // Tu można dodać funkcjonalność związana z wyszukiwaniem grzybów w okolicy
   const znalezioneGrzyby = document.getElementById('znalezioneGrzyby');
-  znalezioneGrzyby.textContent = 'Nie znaleziono grzybów w Twojej okolicy.';
+  znalezioneGrzyby.textContent = 'Przygotowjemy dane dla Ciebie.';
+  window.location.href = 'okolica.html';
 });
 
 // Wywołanie funkcji generującej listę grzybów przy ładowaniu strony
 window.addEventListener('load', generujListeGrzybow);
-
+// Wywołanie funkcji generującej listę grzybów przy ładowaniu strony
+window.addEventListener('load', pobieszKoordy);
 // Obsługa przycisku "Dodaj informacje o zbiorach"
 document.getElementById('dodajFormularzBtn').addEventListener('click', () => {
   wyswietlFormularz();
@@ -40,5 +55,4 @@ function wyswietlFormularz() {
   document.getElementById('formularzZbieraniaGrzybow').style.display = 'block';
 }
 
-// Wywołanie funkcji generującej listę grzybów przy ładowaniu strony
-window.addEventListener('load', generujListeGrzybow);
+

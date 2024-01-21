@@ -10,12 +10,10 @@ fetch('./Coords.json')
     });
 
 function processPoints(Points) {
-	// console.log(Points);
-	
 	Points.forEach(point => {
 		//Dodawanie do Points2
-		Points2.push(point);
-
+		Points2.push([point.latitude, point.longitude, point.amount]);
+		console.log([point.latitude, point.longitude, point.amount]);
 		var intensity = point.amount;
 		var radius = 30 * intensity;
 		var color = 'red';
@@ -25,11 +23,13 @@ function processPoints(Points) {
 			fillOpacity: 0.8,
 			radius: radius
 		}).addTo(map);
+		// console.log(typeof point.latitude);
 		circle.bindTooltip(`Longitude: ${point.longitude}, Latitude: ${point.latitude}, Intensity/hour: ${intensity.amount}, Type: ${point.type}, Region: ${point.voidvodeship}`).openTooltip();
 	});
+	return Points;
 }
 
-console.log(Points);
+
 
 //Tworzenie mapy
 var map = L.map('map');
@@ -43,26 +43,6 @@ var start = L.latLng(52.229676, 23.012229);
 var end = L.latLng(52.406374, 16.925168);
 var bounds = L.latLngBounds(start, end);
 map.fitBounds(bounds);
-
-
-
-
-//Czerwone kropki
-Points.forEach(function(point) {
-var intensity = point.amount;
-var radius = 5;
-var color = 'red';
-
-var circle = L.circle([point.latitude, point.longitude[1]], {
-		color: color,
-		fillColor: color,
-		fillOpacity: 0.8,
-		radius: radius
-}).addTo(map);
-
-circle.bindTooltip(`Latitude: ${point.latitude}, Longitude: ${point.longitude}, Intensity/hour: ${intensity.amount}, Type: ${point.type}, Region: ${point.voidvodeship}`).openTooltip();
-});
-
 
 // FUNKCJA POGODOWA
 const apiKey = "39c43c6a1704445300c2c716f37cb354";
@@ -115,15 +95,13 @@ map.on('click', onMapClick);
 
 
 // FUZZY SETSY
-
 function process2Points(Points2, click_lat, click_lon) {
-	console.log(Array.isArray(Points2));
-	console.log(Points2.length);
-	Points2.forEach(point => {
+	
+	Points2.forEach(point2 => {
 		
 		//Amount
 		var additional = 0;
-		var amount_of = point.amount;
+		var amount_of = point2.amount;
 
 		if (amount_of >= 0 && amount_of <= 5) {
 			additional = 0.1;
@@ -136,20 +114,63 @@ function process2Points(Points2, click_lat, click_lon) {
 		} else if (amount_of > 100) {
 			additional = 1.0;
 		}
+		
 		//Distance
-		var latitu = point.latitude;
-		var longitu = point.longitude;
-
+		var latitu = point2.latitude;
+		var longitu = point2.longitude;
+		console.log(click_lat);
+		console.log(latitu);
 		var c_lat = click_lat;
 		var c_lon = click_lon;
 		var distance = Math.sqrt(Math.pow(latitu - click_lat, 2) + Math.pow(longitu - click_lon, 2));
-		console.log(additional, distance, typeof(point.latitude), typeof(c_lat));
+		console.log(additional, distance, typeof(point2.latitude), typeof(c_lat));
 
 		});
 }
 
 var click_lat = 49.8428;
 var click_lon = 16.8197;
+// console.log(Points2);
+let pp = Points2;
+
+// console.log(Points2);
+
+//PRINTOWANIE
+fetch('./Coords.json')
+    .then(results => results.json())
+    .then(data =>{
+        Points2 = data;
+		processPoints(Points);			
+    });
+
+function processPoints(Points) {
+	Points.forEach(point => {
+		//Dodawanie do Points2
+		Points2.push([point.latitude, point.longitude, point.amount]);
+		console.log([point.latitude, point.longitude, point.amount]);
+		var intensity = point.amount;
+		var radius = 30 * intensity;
+		var color = 'red';
+		var circle = L.circle([point.latitude, point.longitude], {
+			color: color,
+			fillColor: color,
+			fillOpacity: 0.8,
+			radius: radius
+		}).addTo(map);
+		// console.log(typeof point.latitude);
+		circle.bindTooltip(`Longitude: ${point.longitude}, Latitude: ${point.latitude}, Intensity/hour: ${intensity.amount}, Type: ${point.type}, Region: ${point.voidvodeship}`).openTooltip();
+	});
+	return Points;
+}
+
+
+
+// let list = [1,2];
+// list.forEach(s => {
+// 	console.log(s);
+// })
+console.log(Points2)
+
 process2Points(Points2, click_lat, click_lon);
 
  

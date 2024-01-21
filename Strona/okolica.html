@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formularz zbierania grzybów</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container" style="text-align:center;">
+    <form class="okolica">
+      <h2>Witaj grybiarzu!</h2>
+	  <label for="kajgrziby">Tutaj leży dużo smacznych grzybków: </label>  <br><br>
+	  <label for="kordy">50.329462, 18.824159 </label>
+      <ul id="kordyList"></ul>
+    </form>
+
+	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+	<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js">
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""
+  </script>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin="">
+  </script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+
+	
+  <div id="board">
+    <div id="map"></div>
+  </div>
+  
+  <script src="start.js"></script>
+	</div>
+  </div>
+
+  <footer>
+    <p>Strona o grzybach &copy; 2023</p>
+  </footer>
+</body>
+
+<script>
+    var map = L.map('map'); 
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 15,
+        minZoom: 7,
+        attribution: '© OpenStreetMap'
+    }).addTo(map); 
+
+    var start = L.latLng(52.229676, 23.012229);
+    var end = L.latLng(52.406374, 16.925168);
+    var bounds = L.latLngBounds(start, end);
+    map.fitBounds(bounds);
+
+    Points.forEach(function (point) {
+        var marker = L.marker([point[0], point[1]]).addTo(map);
+        marker.bindTooltip(`Latitude: ${point[0]}, Longitude: ${point[1]}, Mushrooms/hour: ${point[2]}, Type: ${point[3]}, Region: ${point[4]}`).openTooltip();
+    });
+
+    var heatLayer = L.heatLayer(warsawPoints, { radius: 20 }).addTo(map);
+	
+
+</script>
+
+
+</html>
