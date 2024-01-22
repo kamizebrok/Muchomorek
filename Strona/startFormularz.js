@@ -70,10 +70,10 @@ function onMapClick(e) {
     if (activeMarker) {
         map.removeLayer(activeMarker);
     }
-
     let marker = L.marker(e.latlng).addTo(map); 
 
-	var dodaj = [e.latlng.lat, e.latlng.lng]; 
+	var dodaj = [e.latlng.lat, e.latlng.lng];   // To do bazy danych, wtedy każde kliknięcie przekazuje tablice kordów: dodaj = [latitude, longitude]
+	//to powyzej ma isc do bazy danych!
 
 	//wyswietlenie w 'oklicy.html'
 	var latitudeString = dodaj[0].toFixed(7).toString();
@@ -89,67 +89,3 @@ function onMapClick(e) {
 }
 map.on('click', onMapClick, Points2);
 
-
-// Konfig markera
-var redIcon = new L.Icon({
-	iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-	shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-	iconSize: [25, 41],
-	iconAnchor: [12, 41],
-	popupAnchor: [1, -34],
-	shadowSize: [41, 41]
-  });
-
-
-// FUZZY SETSY
-function process2Points(click_lat, click_lon) {
-	
-	var tmp_list = [];
-	Points2.forEach(point2 => {
-
-		var additional = 0;
-		var additional2 = 0;
-		
-		var latitu = point2[0];
-		var longitu = point2[1];	
-		var amount_of = point2[2];
-
-		// Ilość 
-		if (amount_of >= 0 && amount_of <= 10) {
-			additional = 0.1;
-		} else if (amount_of > 10 && amount_of <= 40) {
-			additional = 0.2;
-		} else if (amount_of > 40 && amount_of <= 70) {
-			additional = 0.4;
-		} else if (amount_of > 70 && amount_of <= 95) {
-			additional = 0.7;
-		} else if (amount_of > 95) {
-			additional = 1.0;
-		}
-		additional = additional*0.6; // Ewentualne mnożniki jak by Ci się chciało to można tu pokmbinować czy bardziej zależy userowi na ilości czy odległości.
-
-		//Distance
-		var distance = Math.sqrt(Math.pow((latitu - click_lat)/2, 2) + Math.pow((longitu - click_lon), 2))/10;
-		if (distance >= 0.6) {
-			additional2 = 0.1;
-		} else if (distance < 0.20 && distance >= 0.12) {
-			additional2 = 0.2;
-		} else if (distance < 0.12 && distance >= 0.8) {
-			additional2 = 0.5;
-		} else if (distance < 0.08 && distance >= 0.03) {
-			additional2 = 0.7;
-		} else if (distance < 0.03) {
-			additional2 = 1.0;
-		}
-		additional2 = additional2*1.3;
-		var additional3 = (additional + additional2).toFixed(1); // Im wyższa wartość tym bardziej sie opłaca iść    
-		tmp_list.push([click_lat, click_lon, latitu, longitu, additional3]); // latitu i longitu to są najlepsze kordy do których warto iść
-		});
-	let maxElement = tmp_list.reduce((a, b) => 
-	{
-		return (a[4] > b[4]) ? a : b;
-	});
-	console.log(maxElement);
-	var lastCircle = L.marker([maxElement[2], maxElement[3]], {icon: redIcon}).addTo(map);
-	mapMarkers.push(lastCircle);
-}
