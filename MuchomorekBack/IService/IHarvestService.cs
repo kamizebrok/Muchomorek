@@ -7,6 +7,7 @@ namespace MuchomorekBack.IService
     {
         public Task<Harvest> addHarvest(DTOHarvest dtoHarvest);
         public Task<List<Harvest>> listHarvest(int page);
-        public Task<List<Harvest>> listAllHarvest();
+        public Task<List<DTOHarvestListElement>> listAllHarvest();
+        public Task<List<Harvest>> addHarvestLot(List<DTOHarvestWithVoid> zbiory);
     }
 }

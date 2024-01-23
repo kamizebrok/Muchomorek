@@ -19,6 +19,11 @@ namespace MuchomorekBack.Controllers
         {
             return Ok(await _harvestService.addHarvest(zbiory));
         }
+        [HttpPost]
+        public async Task<IActionResult> addHarvestLot([FromBody] List<DTOHarvestWithVoid> zbiory)
+        {
+            return Ok(await _harvestService.addHarvestLot(zbiory));
+        }
         [HttpGet]
         public async Task<IActionResult> listHarvest(int page)
         {
